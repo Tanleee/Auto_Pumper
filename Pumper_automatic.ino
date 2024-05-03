@@ -220,6 +220,17 @@ bool mark = 0;
 bool oldVal_S = 1, oldVal_E = 1, newVal_S, newVal_E;
 void Saving() {
   // Emergency();
+  static bool choose = 0;
+  if (choose) {
+    display.clearDisplay();
+    Find_Mid_dis("Success!");
+    display.display();
+    if (Read(Exit_but)) {
+      mark = 1;
+      choose = !choose;
+    }
+    return;
+  }
   static uint8_t order_but = 1;
   order_but = Convert_Val(3);
   display.clearDisplay();
@@ -244,7 +255,8 @@ void Saving() {
   }
   display.display();
   // Serial.println(state);
-  if (Read(Sele_but)) {
+  choose = Read(Sele_but);
+  if (choose) {
     switch (order_but) {
       case 1:
         Val = 60;
@@ -255,16 +267,6 @@ void Saving() {
       case 3:
         Val = 80;
         break;
-    }
-    display.clearDisplay();
-    while (1) {
-      Find_Mid_dis("Success!");
-      display.display();
-      if (Read(Exit_but)) {
-        mark = 1;
-        delay(800);
-        break;
-      }
     }
   }
   display.clearDisplay();
@@ -562,7 +564,6 @@ void Manual() {
     allow = 1;
     return;
   }
-  //error exit this function
 }
 //pick 1 time it reach on and then it become off
 bool Read(int Pin) {
