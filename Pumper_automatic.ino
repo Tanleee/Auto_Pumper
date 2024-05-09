@@ -196,7 +196,7 @@ int Convert_Val(int amount_func) {
   float space = 1024. / amount_func;
   for (uint8_t i = 1; i <= amount_func; i++) {
     if (Value >= space * (i - 1) && Value < space * i) {
-      return i;
+      return amount_func - i + 1;
     }
   }
 }
